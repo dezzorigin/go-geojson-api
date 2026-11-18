@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="360" viewBox="0 0 920 360" role="img" aria-label="Diagram arsitektur go-geojson-api">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#0f172a"/>
+    </marker>
+  </defs>
+  <rect width="920" height="360" fill="#f8fafc"/>
+  <text x="40" y="44" font-family="Georgia, 'Times New Roman', serif" font-size="26" font-weight="bold" fill="#0f172a">go-geojson-api — arsitektur</text>
+  <text x="40" y="70" font-family="system-ui, sans-serif" font-size="14" fill="#64748b">Go + Fiber v2 · data mock in-memory · tanpa database</text>
+
+  <!-- Client -->
+  <g>
+    <rect x="40" y="110" width="190" height="110" rx="12" fill="#ffffff" stroke="#0f172a" stroke-width="2"/>
+    <text x="135" y="150" text-anchor="middle" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#0f172a">Client</text>
+    <text x="135" y="176" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" fill="#64748b">curl · browser</text>
+    <text x="135" y="196" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" fill="#64748b">aplikasi peta 3D</text>
+  </g>
+
+  <!-- Fiber -->
+  <g>
+    <rect x="350" y="110" width="190" height="110" rx="12" fill="#0f172a"/>
+    <text x="445" y="150" text-anchor="middle" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#ffffff">Fiber v2</text>
+    <text x="445" y="176" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" fill="#cbd5e1">router + logger + CORS</text>
+    <text x="445" y="196" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" fill="#cbd5e1">3 route · GET saja</text>
+  </g>
+
+  <!-- Data -->
+  <g>
+    <rect x="660" y="110" width="220" height="110" rx="12" fill="#ffffff" stroke="#0f172a" stroke-width="2"/>
+    <text x="770" y="150" text-anchor="middle" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#0f172a">Data mock</text>
+    <text x="770" y="176" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" fill="#64748b">geojson.go · in-memory</text>
+    <text x="770" y="196" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" fill="#64748b">2 gedung · hardcode</text>
+  </g>
+
+  <line x1="230" y1="165" x2="350" y2="165" stroke="#0f172a" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="540" y1="165" x2="660" y2="165" stroke="#0f172a" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="290" y="150" text-anchor="middle" font-family="ui-monospace, monospace" font-size="12" fill="#64748b">HTTP</text>
+  <text x="600" y="150" text-anchor="middle" font-family="ui-monospace, monospace" font-size="12" fill="#64748b">slice</text>
+
+  <!-- Endpoints -->
+  <g>
+    <rect x="40" y="250" width="840" height="70" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+    <text x="60" y="280" font-family="ui-monospace, monospace" font-size="13" fill="#0f172a">GET /</text>
+    <text x="60" y="302" font-family="system-ui, sans-serif" font-size="12" fill="#64748b">indeks API</text>
+    <text x="330" y="280" font-family="ui-monospace, monospace" font-size="13" fill="#0f172a">GET /api/v1/health</text>
+    <text x="330" y="302" font-family="system-ui, sans-serif" font-size="12" fill="#64748b">{"status":"healthy"}</text>
+    <text x="600" y="280" font-family="ui-monospace, monospace" font-size="13" fill="#0f172a">GET /api/v1/spatial/buildings</text>
+    <text x="600" y="302" font-family="system-ui, sans-serif" font-size="12" fill="#64748b">FeatureCollection · ?type=</text>
+  </g>
+</svg>

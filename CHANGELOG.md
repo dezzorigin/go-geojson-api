@@ -1,40 +1,46 @@
 # Changelog
 
-All notable changes to this project will be documented in this file.
+Semua perubahan penting pada proyek ini dicatat di file ini.
 
-The format is based on [Keep a Changelog](https://keepachangelot.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+Format mengikuti [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+dan proyek ini mengikuti [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [1.1.0] - 2026-11-18
 
 ### Added
-- Initial Go project setup for GeoJSON API
-- GeoJSON feature collection endpoint
-- Spatial query parameters support
-- Rate limiting middleware
-- Docker container configuration
+- Route indeks `GET /` yang mengembalikan nama, versi, dan daftar endpoint
+- Tes unit endpoint di `main_test.go` (health, daftar gedung, filter,
+  filter tanpa hasil, indeks, 404) — dijalankan dengan `go test -race`
+- `Dockerfile` multi-stage (Go 1.27 → Alpine, user non-root)
+- CI GitHub Actions: `gofmt` + `go vet` + `go test -race` + `go build` +
+  `docker build` + smoke test container + `html-validate` untuk landing
+- `.gitignore` Go
+- Halaman dokumentasi statis di `landing/` (deploy Cloudflare Pages)
+- Dokumentasi: `docs/api.md`, `docs/architecture.md`,
+  `docs/deployment.md`, `docs/diagram.svg`
+- `demo-output.txt`: output curl verbatim dari play-test endpoint
 
 ### Changed
-- Updated Go dependencies to latest stable versions
-- Improved API response formatting
-- Enhanced error handling for invalid inputs
-- Optimized database query performance
+- README dan PRD ditulis ulang secara jujur: README lama berisi instruksi
+  `npm install` untuk proyek Go dan mengklaim ada database — keduanya
+  tidak pernah ada
+- Port server kini lewat env `PORT` (default 8080)
+- Kode dipecah: `main.go` (bootstrap), `app.go` (route), `geojson.go`
+  (data + handler) — sebelumnya semua di `main.go`
 
 ### Fixed
-- Fixed GeoJSON format validation errors
-- Fixed query parameter parsing bugs
-- Fixed rate limiting configuration issues
+- Filter `?type=` yang tidak cocok gedung mana pun sebelumnya
+  mengembalikan `"features": null` (GeoJSON tidak valid); sekarang
+  mengembalikan `"features": []`
 
-### Security
-- Updated dependency versions to patch vulnerabilities
-- Fixed potential SQL injection risks
-- Added input validation for all endpoints
+### Removed
+- Klaim fiktif di CHANGELOG lama (rate limiting, Docker, validasi SQL
+  injection, "optimasi query database") — tidak satu pun pernah ada di kode
 
-## [1.0.0] - 2024-01-01
+## [1.0.0] - 2026-11-05
 
 ### Added
-- Initial GeoJSON API setup
-- Feature collection endpoint
-- Basic spatial queries
-- Docker configuration
-- Health check endpoint
+- Endpoint `GET /api/v1/health`
+- Endpoint `GET /api/v1/spatial/buildings` dengan filter `?type=`
+- Data mock GeoJSON 2 gedung (asrama + perpustakaan)
+- README, PRD, LICENSE MIT
