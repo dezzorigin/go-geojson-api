@@ -1,0 +1,55 @@
+name: CI
+
+on:
+  push:
+    branches: [main, feat/*]
+  pull_request:
+    branches: [main]
+
+jobs:
+  go:
+    name: Go (fmt, vet, test, build)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.27"
+          cache: true
+      - name: gofmt
+        run: test -z "$(gofmt -l .)"
+      - name: go vet
+        run: go vet ./...
+      - name: go test (race + coverage)
+        run: go test -race -coverprofile=coverage.out ./...
+      - name: go build
+        run: go build -o /tmp/go-geojson-api .
+
+  docker:
+    name: Docker (build + smoke test)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: docker build
+        run: docker build -t go-geojson-api:test .
+      - name: smoke test container
+        run: |
+          docker run -d --rm -p 8080:8080 --name geojson-test go-geojson-api:test
+          for i in $(seq 1 15); do
+            if curl -fsS http://127.0.0.1:8080/api/v1/health >/dev/null 2>&1; then break; fi
+            sleep 1
+          done
+          curl -fsS http://127.0.0.1:8080/api/v1/health
+          curl -fsS "http://127.0.0.1:8080/api/v1/spatial/buildings?type=residential" | grep -q bld-001
+          docker stop geojson-test
+
+  landing:
+    name: Landing page (HTML validate)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: html-validate
+        run: npx --yes html-validate@8 landing/index.html

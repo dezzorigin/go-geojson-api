@@ -1,0 +1,18 @@
+$ go run .
+Fiber v2.52.13 listening on :8080
+
+$ curl -s localhost:8080/
+--- root:
+{"endpoints":["GET /api/v1/health","GET /api/v1/spatial/buildings","GET /api/v1/spatial/buildings?type=residential","GET /api/v1/spatial/buildings?type=academic"],"name":"go-geojson-api","version":"1.1.0"}
+--- health:
+{"status":"healthy"}
+--- buildings:
+{"features":[{"geometry":{"coordinates":[[[95.3697,5.5683],[95.3699,5.5683],[95.3699,5.5681],[95.3697,5.5681],[95.3697,5.5683]]],"type":"Polygon"},"properties":{"capacity":120,"height":15,"id":"bld-001","name":"Student Dormitory Block A","type":"residential"},"type":"Feature"},{"geometry":{"coordinates":[[[95.371,5.569],[95.3715,5.569],[95.3715,5.5685],[95.371,5.5685],[95.371,5.569]]],"type":"Polygon"},"properties":{"capacity":500,"height":24,"id":"bld-002","name":"Main Library","type":"academic"},"type":"Feature"}],"type":"FeatureCollection"}
+--- filter residential:
+{"features":[{"geometry":{"coordinates":[[[95.3697,5.5683],[95.3699,5.5683],[95.3699,5.5681],[95.3697,5.5681],[95.3697,5.5683]]],"type":"Polygon"},"properties":{"capacity":120,"height":15,"id":"bld-001","name":"Student Dormitory Block A","type":"residential"},"type":"Feature"}],"type":"FeatureCollection"}
+--- filter academic:
+{"features":[{"geometry":{"coordinates":[[[95.371,5.569],[95.3715,5.569],[95.3715,5.5685],[95.371,5.5685],[95.371,5.569]]],"type":"Polygon"},"properties":{"capacity":500,"height":24,"id":"bld-002","name":"Main Library","type":"academic"},"type":"Feature"}],"type":"FeatureCollection"}
+--- filter unknown (sebelumnya null, sekarang []):
+{"features":[],"type":"FeatureCollection"}
+--- unknown route:
+HTTP 404

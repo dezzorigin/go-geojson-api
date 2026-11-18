@@ -1,0 +1,25 @@
+# Binaries & build output
+go-geojson-api
+*.exe
+*.test
+*.out
+coverage.out
+/out/
+
+# Go module cache & build cache (tidak pernah di-commit)
+/go/
+
+# Dependency vendor (diunduh ulang via go mod download)
+vendor/
+
+# Editor & OS
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Environment & secrets — JANGAN PERNAH commit file ini
+.env
+.env.*
+!.env.example
